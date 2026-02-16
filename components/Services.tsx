@@ -6,8 +6,10 @@ import {
     CheckCircle2, Plus, Minus, ArrowRight
 } from 'lucide-react';
 
+// Added 'id' to each service object to resolve the TypeScript error
 const serviceData = [
     {
+        id: "market-entry",
         title: "1. Strategic Advisory & Market Entry",
         subtitle: "For Japanese firms entering India or Indian firms expanding to Japan.",
         icon: <Globe2 className="text-blue-600" size={24} />,
@@ -19,6 +21,7 @@ const serviceData = [
         ]
     },
     {
+        id: "tech-legal",
         title: "2. The \"Japan Desk\": Tech-Legal & Compliance",
         subtitle: "Bridging the legal divide with a JLPT N1-certified Advocate.",
         icon: <Scale className="text-blue-600" size={24} />,
@@ -30,6 +33,7 @@ const serviceData = [
         ]
     },
     {
+        id: "human-capital",
         title: "3. Human Capital Consulting: Leadership & Cultural Mindset",
         subtitle: "Training the next generation of Indo-Japan business leaders.",
         icon: <Users className="text-blue-600" size={24} />,
@@ -41,6 +45,7 @@ const serviceData = [
         ]
     },
     {
+        id: "talent-placement",
         title: "4. Elite Talent Placement (Bilingual & Tech)",
         subtitle: "Sourcing the top 1% of talent for the corridor.",
         icon: <UserCheck className="text-blue-600" size={24} />,
@@ -75,7 +80,7 @@ export default function Services() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                     {serviceData.map((service, index) => (
-                        <ServiceCard key={index} service={service} />
+                        <ServiceCard key={service.id} service={service} />
                     ))}
                 </div>
             </div>
@@ -88,7 +93,7 @@ function ServiceCard({ service }: { service: typeof serviceData[0] }) {
 
     return (
         <motion.div
-            whileHover={{ y: -10, scale: 1.02 }}
+            whileHover={{ y: -5, scale: 1.01 }}
             transition={{ type: "spring", stiffness: 300 }}
             className="bg-white p-6 md:p-10 rounded-[2rem] border border-slate-100 shadow-[0_15px_40px_-12px_rgba(37,99,235,0.08)] flex flex-col items-start h-fit transition-shadow hover:shadow-[0_20px_50px_-10px_rgba(37,99,235,0.15)]"
         >
@@ -131,8 +136,13 @@ function ServiceCard({ service }: { service: typeof serviceData[0] }) {
                                     </div>
                                 );
                             })}
-                            <button className="mt-4 w-full md:w-auto bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors">
-                                Enquire for {service.id} <ArrowRight size={16} />
+
+                            {/* FIXED: Uses service.title and removes the 'id' error */}
+                            <button
+                                onClick={() => window.location.href = '/#contact'}
+                                className="mt-4 w-full md:w-auto bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors group"
+                            >
+                                Enquire for Service <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                             </button>
                         </div>
                     </motion.div>
