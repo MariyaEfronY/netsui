@@ -30,6 +30,7 @@ export default function Navbar() {
         { name: 'Leadership', href: '#leadership' },
         { name: 'Philosophy', href: '#philosophy' },
         { name: 'Services', href: '#services' },
+        { name: 'Contact', href: '#contact' },
     ];
 
     return (
