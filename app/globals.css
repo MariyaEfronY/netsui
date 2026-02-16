@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+:root {
+  --foreground-rgb: 15, 23, 42;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 240, 249, 244; /* Light Mint Tint */
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900;
+  }
+}
+
+.green-gradient {
+  @apply bg-gradient-to-br from-emerald-900 via-green-900 to-emerald-950;
+}
