@@ -40,36 +40,38 @@ export default function Navbar() {
             <nav className="fixed top-6 left-0 right-0 z-[100] flex justify-center px-4">
                 <div className="w-full max-w-6xl">
                     <div
-                        className={`flex items-center justify-between px-8 h-[75px] rounded-full border transition-all duration-500
+                        className={`flex items-center justify-between px-8 h-[60px] rounded-full border transition-all duration-500
               ${scrolled
                                 ? "bg-white/95 backdrop-blur-xl shadow-2xl border-white/60 scale-[0.97]"
                                 : "bg-white/10 backdrop-blur-lg border-white/20"
                             }
             `}
                     >
-                        {/* Responsive Logo */}
+                        {/* Navigation Logo */}
                         <div
                             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                             className="cursor-pointer flex items-center shrink-0"
                         >
                             <Image
-                                src="/logo/netsui_logo.png"
+                                src="/logo/netsui_logo_bgre.png"
                                 alt="Netsui Logo"
-                                width={220}
-                                height={120}
+                                width={200}
+                                height={200}
                                 priority
                                 className="
-      h-[28px] 
-      md:h-[36px] 
-      lg:h-[42px] 
-      w-auto 
-      object-contain 
-      transition-all 
+      h-[120px]
+      md:h-[44px]
+      lg:h-[150px]
+      w-auto
+      object-contain
+      transition-all
       duration-300
-      drop-shadow-sm
+      brightness-110
+      contrast-110
     "
                             />
                         </div>
+
 
 
                         {/* Desktop Navigation */}
@@ -78,13 +80,16 @@ export default function Navbar() {
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className={`text-xs font-bold uppercase tracking-widest transition-colors duration-300
-                    ${scrolled ? "text-slate-800" : "text-white"
-                                        }
-                    hover:text-blue-600`}
+                                    className={`group relative text-xs font-bold uppercase tracking-widest transition-all duration-300
+        ${scrolled ? "text-slate-800" : "text-white"}
+        hover:text-blue-600`}
                                 >
-                                    {link.name}
+                                    <span className="relative">
+                                        {link.name}
+                                        <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                                    </span>
                                 </a>
+
                             ))}
 
                             <button
@@ -130,10 +135,16 @@ export default function Navbar() {
                                         key={link.name}
                                         href={link.href}
                                         onClick={() => setIsOpen(false)}
-                                        className="text-lg font-bold uppercase text-white hover:text-blue-400 transition"
+                                        className="group flex items-center justify-center gap-3 text-lg font-bold uppercase text-white transition-all duration-300 hover:text-blue-400"
                                     >
-                                        {link.name}
+                                        <span>{link.name}</span>
+
+                                        <ArrowRight
+                                            size={18}
+                                            className="transition-all duration-300 group-hover:translate-x-2 group-hover:text-blue-400"
+                                        />
                                     </a>
+
                                 ))}
 
                                 <button
