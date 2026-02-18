@@ -1,70 +1,109 @@
 "use client";
 import React from 'react';
-import { Shield, Globe, Users, ArrowRight, Award, Zap } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Shield, Globe, Users, ArrowRight, Zap } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Hero() {
+    const { scrollY } = useScroll();
+    const y = useTransform(scrollY, [0, 500], [0, 150]);
+
     return (
-        <section className="relative min-h-screen flex flex-col justify-center items-center bg-[#020617] overflow-hidden">
-            {/* Dynamic Background Effects */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-[5%] right-[-5%] w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[100px]" />
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]" />
+        <section className="relative min-h-screen flex flex-col justify-center items-center bg-[#020617] overflow-hidden pt-24 pb-20">
+
+            {/* --- BACKGROUND ARCHITECTURE --- */}
+            <div className="absolute inset-0 z-0">
+                <motion.div style={{ y }} className="absolute inset-0 w-full h-full">
+                    <Image
+                        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000"
+                        alt="Global Tech Background"
+                        fill
+                        priority
+                        className="object-cover brightness-[0.2] contrast-[1.2]"
+                    />
+                </motion.div>
+
+                {/* Tactical Grid */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20" />
+
+                {/* --- KINETIC DATA LINES --- */}
+                {/* These SVG paths animate a "pulse" along the grid lines */}
+                <svg className="absolute inset-0 w-full h-full opacity-40">
+                    <motion.path
+                        d="M 0 400 L 2000 400"
+                        stroke="rgba(59, 130, 246, 0.5)"
+                        strokeWidth="1"
+                        fill="none"
+                        strokeDasharray="100 1000"
+                        animate={{ strokeDashoffset: [-1100, 0] }}
+                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    />
+                    <motion.path
+                        d="M 400 0 L 400 2000"
+                        stroke="rgba(99, 102, 241, 0.5)"
+                        strokeWidth="1"
+                        fill="none"
+                        strokeDasharray="100 1000"
+                        animate={{ strokeDashoffset: [-1100, 0] }}
+                        transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: 1 }}
+                    />
+                </svg>
             </div>
 
-            <div className="container mx-auto px-6 relative z-10 pt-20 pb-12">
-
-
-                {/* Hero Main Content */}
-                <div className="text-center max-w-5xl mx-auto mt-12 mb-20">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-8 animate-in slide-in-from-top-4 duration-700">
-                        <Zap size={12} className="fill-current" /> Indo-Japan Tech-Legal Bridge
-                    </div>
-
-                    <h1 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tight leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000">
-                        PASSION DEFINES <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-blue-600">
-                            EXCELLENCE
+            <div className="container mx-auto px-6 relative z-10">
+                {/* --- HERO TEXT SECTION --- */}
+                <div className="text-center max-w-5xl mx-auto mb-32">
+                    <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-6xl md:text-[9rem] font-black text-white mb-8 tracking-tighter leading-[0.8] uppercase italic"
+                    >
+                        PASSION <span className="text-blue-600">DEFINES</span> <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-slate-100 to-indigo-500">
+                            EXCELLENCE.
                         </span>
-                    </h1>
+                    </motion.h1>
 
-                    <p className="text-lg md:text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-                        Strategic Advisory for the 2026 Indo-Japan Corridor. We bridge the Linguistic, Regulatory, and Mindset gaps with VP-level authority.
+                    <p className="text-slate-400 text-lg md:text-2xl max-w-2xl mx-auto mb-12">
+                        Strategic Advisory for the <span className="text-white italic">2026 Corridor</span>.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-                        <button className="group bg-blue-600 hover:bg-blue-500 text-white px-10 py-5 rounded-full font-bold transition-all shadow-2xl shadow-blue-600/30 flex items-center gap-3">
-                            Request Strategic Briefing
-                            <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
-                        </button>
-                        <button className="border border-slate-800 hover:border-blue-500/50 hover:bg-blue-500/5 text-slate-300 px-10 py-5 rounded-full font-bold transition-all">
-                            The Netsui Manifesto
-                        </button>
+                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                        <Link href="/register-form">
+                            <button className="group bg-blue-600 text-white px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center gap-4 transition-all hover:bg-white hover:text-blue-600 shadow-xl shadow-blue-600/20">
+                                Register Now
+                                <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform duration-300" />
+                            </button>
+                        </Link>
                     </div>
                 </div>
 
-                {/* THE NETSUI TRINITY PILLARS */}
-                <div className="grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {/* --- TRINITY PILLARS WITH IMAGE ICONS --- */}
+                <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     <Pillar
                         icon={<Globe size={24} />}
                         title="Strategic Advisory"
                         label="VP-Level Insight"
-                        desc="Leveraging 20 years of Automotive-Electronics leadership to navigate market entry and JV structuring."
-                        delay="delay-[400ms]"
+                        desc="Navigating JV structuring and market entry with 20 years of technical leadership."
+                        img="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=500"
+                        index={0}
                     />
                     <Pillar
                         icon={<Shield size={24} />}
                         title="Tech-Legal Excellence"
                         label="N1 Certified Counsel"
-                        desc="Bridging the Indian legal landscape with JLPT N1 fluency. Specializing in Corporate and Labor Law."
-                        delay="delay-[600ms]"
+                        desc="Bridging regulatory gaps with JLPT N1 native fluency and corporate law expertise."
+                        img="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=500"
+                        index={1}
                     />
                     <Pillar
                         icon={<Users size={24} />}
                         title="Human Capital"
                         label="The Vetted Bridge"
-                        desc="Synchronizing Indian agility with Japanese quality through technical vetting and 'Suriawase' training."
-                        delay="delay-[800ms]"
+                        desc="Synchronizing Indian agility with Japanese 'Suriawase' quality through elite vetting."
+                        img="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=500"
+                        index={2}
                     />
                 </div>
             </div>
@@ -72,17 +111,45 @@ export default function Hero() {
     );
 }
 
-function Pillar({ icon, title, label, desc, delay }: any) {
+function Pillar({ icon, title, label, desc, img, index }: any) {
     return (
-        <div className={`group relative bg-white/[0.03] backdrop-blur-xl border border-white/[0.05] p-8 rounded-2xl hover:border-blue-500/40 transition-all duration-500 animate-in fade-in slide-in-from-bottom-8 ${delay}`}>
-            <div className="w-12 h-12 bg-blue-600/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-all duration-500 text-blue-400 group-hover:text-white">
-                {icon}
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2, duration: 0.7 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -10 }}
+            className="group relative bg-[#0f172a]/40 backdrop-blur-2xl border border-white/5 p-10 rounded-[3rem] overflow-hidden"
+        >
+            {/* Animated Hover Background Image (Subtle) */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700">
+                <Image src={img} alt={title} fill className="object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" />
             </div>
-            <p className="text-blue-500 font-bold text-[10px] uppercase tracking-widest mb-2">{label}</p>
-            <h3 className="text-white font-bold text-xl mb-3">{title}</h3>
-            <p className="text-slate-500 text-sm leading-relaxed group-hover:text-slate-300 transition-colors">
-                {desc}
-            </p>
-        </div>
+
+            {/* --- ICON PORTAL --- */}
+            <div className="relative w-16 h-16 mb-8">
+                {/* Spinning Portal Ring */}
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 border border-dashed border-blue-500/30 rounded-2xl"
+                />
+                {/* Icon Container */}
+                <div className="absolute inset-2 bg-blue-600/10 rounded-xl flex items-center justify-center text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 z-10">
+                    {icon}
+                </div>
+            </div>
+
+            <div className="relative z-10">
+                <p className="text-blue-500 font-black text-[9px] uppercase tracking-[0.4em] mb-4">{label}</p>
+                <h3 className="text-white font-bold text-2xl mb-4 tracking-tight leading-tight">{title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed group-hover:text-slate-200 transition-colors">
+                    {desc}
+                </p>
+            </div>
+
+            {/* Corner Accent Line */}
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-bl-full" />
+        </motion.div>
     );
 }
