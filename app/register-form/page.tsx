@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, Variants } from 'framer-motion';
 import { User, Mail, Phone, MapPin, CheckCircle2, Loader2, ArrowRight, Sparkles } from 'lucide-react';
 
@@ -14,6 +14,11 @@ export default function UserRegistration() {
         location: ''
     });
 
+    // Ensure page starts at top when this form opens
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -23,7 +28,10 @@ export default function UserRegistration() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...formData, email: formData.email.toLowerCase() }),
             });
-            if (res.ok) setSubmitted(true);
+            if (res.ok) {
+                setSubmitted(true);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         } catch (err) {
             console.error("Critical failure during node initialization");
         } finally {
@@ -31,7 +39,6 @@ export default function UserRegistration() {
         }
     };
 
-    // FIX: Explicitly typing Variants to resolve Next.js build errors
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
@@ -41,42 +48,36 @@ export default function UserRegistration() {
     };
 
     const inputVariants: Variants = {
-        hidden: { opacity: 0, y: 25, rotateX: -15 },
+        hidden: { opacity: 0, y: 25 },
         visible: {
             opacity: 1,
             y: 0,
-            rotateX: 0,
-            transition: {
-                type: 'spring',
-                damping: 15,
-                stiffness: 100
-            }
+            transition: { type: 'spring', damping: 15, stiffness: 100 }
         }
     };
 
     if (submitted) {
         return (
-            <div className="min-h-screen bg-[#020617] flex items-center justify-center p-6 overflow-hidden">
+            <div className="min-h-screen bg-[#020617] flex items-center justify-center p-6">
                 <motion.div
-                    initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
-                    animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-                    className="text-center bg-white/5 border border-white/10 p-10 sm:p-16 rounded-[3rem] backdrop-blur-3xl shadow-2xl relative"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="text-center bg-white/5 border border-white/10 p-10 sm:p-16 rounded-[3rem] backdrop-blur-3xl shadow-2xl"
                 >
                     <motion.div
                         initial={{ rotate: -180, scale: 0 }}
                         animate={{ rotate: 0, scale: 1 }}
                         transition={{ type: 'spring', damping: 10, delay: 0.2 }}
-                        className="relative z-10"
                     >
                         <CheckCircle2 size={80} className="text-blue-500 mx-auto mb-6" />
                     </motion.div>
                     <h2 className="text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tighter">Identity Verified</h2>
                     <p className="text-slate-400 mt-4 font-bold uppercase text-[10px] tracking-[0.4em]">Node established in Netsui.OS</p>
                     <button
-                        onClick={() => window.location.reload()}
+                        onClick={() => window.location.href = '/'}
                         className="mt-10 px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-white font-black uppercase text-[10px] tracking-widest hover:bg-white/10 transition-all shadow-lg"
                     >
-                        Initialize New Entry
+                        Return to Interface
                     </button>
                 </motion.div>
             </div>
@@ -84,24 +85,28 @@ export default function UserRegistration() {
     }
 
     return (
-        <div className="min-h-screen bg-[#020617] text-white flex items-center justify-center p-4 sm:p-8 relative overflow-hidden [perspective:1200px]">
-            {/* Dynamic Background Orbs */}
-            <motion.div
-                animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-                transition={{ duration: 12, repeat: Infinity }}
-                className="absolute top-[-10%] right-[-10%] w-[70%] h-[70%] bg-blue-600/20 rounded-full blur-[120px]"
-            />
-            <motion.div
-                animate={{ scale: [1.3, 1, 1.3], opacity: [0.1, 0.3, 0.1] }}
-                transition={{ duration: 10, repeat: Infinity }}
-                className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-600/15 rounded-full blur-[120px]"
-            />
+        /* REMOVED overflow-hidden and FIXED min-h-screen padding */
+        <div className="min-h-screen w-full bg-[#020617] text-white flex flex-col items-center justify-start py-12 px-4 sm:px-8 relative">
+
+            {/* Dynamic Background Orbs - Positioned Absolute to not affect scroll height */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden">
+                <motion.div
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
+                    transition={{ duration: 12, repeat: Infinity }}
+                    className="absolute top-[-10%] right-[-10%] w-[70%] h-[70%] bg-blue-600/20 rounded-full blur-[120px]"
+                />
+                <motion.div
+                    animate={{ scale: [1.3, 1, 1.3], opacity: [0.1, 0.3, 0.1] }}
+                    transition={{ duration: 10, repeat: Infinity }}
+                    className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-600/15 rounded-full blur-[120px]"
+                />
+            </div>
 
             <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="w-full max-w-xl z-10"
+                className="w-full max-w-xl z-10 my-auto"
             >
                 <div className="bg-[#0f172a]/40 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] sm:rounded-[4rem] p-8 sm:p-14 shadow-2xl">
                     <header className="mb-10 relative">
@@ -121,7 +126,7 @@ export default function UserRegistration() {
                             </motion.span>
                         </h1>
                         <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.5em] mt-3">
-                            Join with Us
+                            Institutional Onboarding
                         </p>
                     </header>
 
@@ -138,12 +143,12 @@ export default function UserRegistration() {
                             </div>
                         </motion.div>
 
-                        {/* Email - Forced Lowercase View */}
+                        {/* Email */}
                         <motion.div variants={inputVariants} className="group">
                             <div className="relative">
                                 <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors" size={18} />
                                 <input
-                                    required type="email" placeholder="email address"
+                                    required type="email" placeholder="EMAIL ADDRESS"
                                     className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 pl-14 pr-6 text-[11px] font-bold lowercase tracking-widest focus:ring-2 focus:ring-blue-600/50 focus:border-blue-600 outline-none transition-all placeholder:text-slate-700 placeholder:uppercase"
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value.toLowerCase() })}
                                 />
@@ -164,17 +169,15 @@ export default function UserRegistration() {
 
                         {/* Gender Select */}
                         <motion.div variants={inputVariants}>
-                            <div className="relative">
-                                <select
-                                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 px-6 text-[11px] font-bold uppercase tracking-widest focus:ring-2 focus:ring-blue-600/50 outline-none transition-all appearance-none cursor-pointer"
-                                    onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                                >
-                                    <option className="bg-slate-900" value="Prefer not to say">GENDER: SELECT</option>
-                                    <option className="bg-slate-900" value="Male">MALE</option>
-                                    <option className="bg-slate-900" value="Female">FEMALE</option>
-                                    <option className="bg-slate-900" value="Other">OTHER</option>
-                                </select>
-                            </div>
+                            <select
+                                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 px-6 text-[11px] font-bold uppercase tracking-widest focus:ring-2 focus:ring-blue-600/50 outline-none transition-all appearance-none cursor-pointer"
+                                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                            >
+                                <option className="bg-slate-900" value="Prefer not to say">GENDER: SELECT</option>
+                                <option className="bg-slate-900" value="Male">MALE</option>
+                                <option className="bg-slate-900" value="Female">FEMALE</option>
+                                <option className="bg-slate-900" value="Other">OTHER</option>
+                            </select>
                         </motion.div>
 
                         {/* Location */}
@@ -214,15 +217,11 @@ export default function UserRegistration() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.2 }}
-                    className="text-center mt-10 space-y-2 opacity-60"
+                    className="text-center mt-10 mb-10 space-y-2 opacity-60"
                 >
                     <p className="text-slate-500 text-[9px] font-bold uppercase tracking-[0.6em]">
                         Netsui Unified Interface v2.0
                     </p>
-                    <div className="flex justify-center gap-3">
-                        <div className="h-[1px] w-8 bg-blue-900" />
-                        <div className="h-[1px] w-8 bg-blue-900" />
-                    </div>
                 </motion.div>
             </motion.div>
         </div>

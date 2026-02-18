@@ -3,84 +3,95 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Globe2, Scale, Users, UserCheck,
-    CheckCircle2, Plus, Minus, ArrowRight
+    CheckCircle2, Plus, Minus, ArrowRight, Sparkles
 } from 'lucide-react';
+import Image from 'next/image';
 
-// Added 'id' to each service object to resolve the TypeScript error
 const serviceData = [
     {
         id: "market-entry",
         title: "1. Strategic Advisory & Market Entry",
-        subtitle: "For Japanese firms entering India or Indian firms expanding to Japan.",
+        subtitle: "Indo-Japan GTM Strategy",
+        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop", // Business skyscraper/Tokyo vibe
         icon: <Globe2 className="text-blue-600" size={24} />,
         points: [
-            "Indo-Japan GTM Strategy: Crafting data-driven Go-To-Market strategies specifically for the Tech, Automotive, and Semiconductor sectors.",
-            "Joint Venture (JV) & M&A Advisory: Identifying strategic partners, suppliers, vendors, conducting senior-level due diligence, and structuring cross-border entities.",
-            "Sales Architecture Design: Leveraging 15 years of experience as a Sales Director in Tokyo to build high-performance sales teams and dealer networks.",
-            "ODC & GCC Setup: End-to-end consulting for establishing Offshore Development Centers and Global Capability Centers in Bengaluru."
+            "Indo-Japan GTM Strategy: Crafting data-driven Go-To-Market strategies.",
+            "Joint Venture (JV) & M&A Advisory: Identifying strategic partners and senior-level due diligence.",
+            "Sales Architecture Design: Leveraging 15 years of experience as a Sales Director in Tokyo.",
+            "ODC & GCC Setup: End-to-end consulting for establishing Development Centers in Bengaluru."
         ]
     },
     {
         id: "tech-legal",
-        title: "2. The \"Japan Desk\": Tech-Legal & Compliance",
-        subtitle: "Bridging the legal divide with a JLPT N1-certified Advocate.",
+        title: "2. The \"Japan Desk\": Tech-Legal",
+        subtitle: "Bridging the Legal Divide",
+        image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=800&auto=format&fit=crop", // Law/Scale aesthetic
         icon: <Scale className="text-blue-600" size={24} />,
         points: [
-            "Entity Incorporation: Navigating the regulatory landscape to establish Indian Private Limited subsidiaries for Japanese corporations.",
-            "Labor Law & Employment Compliance: Aligning Indian labor statutes with Japanese corporate ethics and quality standards.",
-            "Contractual Drafting & Negotiation: Bilingual legal review of MSAs, NDAs, and Service Agreements, ensuring no nuance is lost between Tokyo and Bengaluru.",
-            "IP Protection & Strategy: Specialized legal protection for hardware, software, and automotive IP in the Indian market."
+            "Entity Incorporation: Navigating regulatory landscapes for Indian subsidiaries.",
+            "Labor Law Compliance: Aligning Indian statutes with Japanese corporate ethics.",
+            "Contractual Drafting: Bilingual legal review of MSAs and NDAs.",
+            "IP Protection: Specialized legal protection for hardware and automotive IP."
         ]
     },
     {
         id: "human-capital",
-        title: "3. Human Capital Consulting: Leadership & Cultural Mindset",
-        subtitle: "Training the next generation of Indo-Japan business leaders.",
+        title: "3. Human Capital Consulting",
+        subtitle: "Leadership & Cultural Mindset",
+        image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop", // Workshop/Team vibe
         icon: <Users className="text-blue-600" size={24} />,
         points: [
-            "Bilingual Leadership Workshops: Training Indian managers to lead with the Monozukuri (Quality) mindset.",
-            "The \"Netsui\" Methodologies: Implementation of PDCA, 5-Why, and A4 Summary reporting into daily Indian operations.",
-            "Cross-Cultural Friction Management: Specialized coaching in Nemawashi (consensus building) and Hourensou (reporting) protocols.",
-            "Psychology of Success: Using B.E. + M.A. (Psychology) background to bridge communication gaps between high-context (Japan) and low-context (India) work cultures."
+            "Bilingual Leadership Workshops: Training Indian managers with Monozukuri mindset.",
+            "The \"Netsui\" Methodologies: Implementation of PDCA and 5-Why protocols.",
+            "Cross-Cultural Management: Specialized coaching in Nemawashi and Hourensou.",
+            "Psychology of Success: Bridging high-context and low-context work cultures."
         ]
     },
     {
         id: "talent-placement",
-        title: "4. Elite Talent Placement (Bilingual & Tech)",
-        subtitle: "Sourcing the top 1% of talent for the corridor.",
+        title: "4. Elite Talent Placement",
+        subtitle: "Sourcing the Top 1% of Talent",
+        image: "/images/placement.avif", // Tech recruitment vibe
         icon: <UserCheck className="text-blue-600" size={24} />,
         points: [
-            "Technical Vetting: Every candidate undergoes a rigorous assessment by a former VP of Electronics—ensuring they don't just \"know\" the tech but can execute it.",
-            "Linguistic Precision: In-house N1-level screening for bilingual engineers and project managers (N3 to N1).",
-            "Cultural Readiness Filter: Vetting candidates for their ability to thrive in the long-term, process-driven environment of Japanese OEMs."
+            "Technical Vetting: Rigorous assessment by a former VP of Electronics.",
+            "Linguistic Precision: In-house N1-level screening for engineers.",
+            "Cultural Readiness Filter: Vetting for long-term process-driven environments."
         ]
     }
 ];
 
 export default function Services() {
     return (
-        <section className="bg-[#F8FAFC] py-16 md:py-24 px-4 md:px-6">
-            <div className="container mx-auto max-w-7xl">
-                <header className="mb-16 text-center md:text-left">
-                    <motion.span
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        className="text-blue-600 font-bold uppercase tracking-[0.3em] text-xs md:text-sm block mb-4"
+        <section className="bg-[#fcfdfe] py-20 md:py-32 px-4 md:px-6 relative overflow-hidden">
+            {/* Background Decoration */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-600/20 to-transparent" />
+
+            <div className="container mx-auto max-w-7xl relative z-10">
+                <header className="mb-20">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        className="flex items-center gap-3 mb-4"
                     >
-                        Institutional Solutions
-                    </motion.span>
+                        <div className="h-[2px] w-8 bg-blue-600" />
+                        <span className="text-blue-600 font-black uppercase tracking-[0.4em] text-[10px] md:text-xs">
+                            Institutional Solutions
+                        </span>
+                    </motion.div>
                     <motion.h2
-                        initial={{ y: 20, opacity: 0 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        className="text-3xl md:text-5xl font-black text-slate-900 leading-tight"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        className="text-4xl md:text-6xl font-black text-slate-900 leading-[0.9] tracking-tighter"
                     >
-                        The Netsui Operating System
+                        The Netsui <br />
+                        <span className="text-blue-600 italic font-light">Operating System</span>
                     </motion.h2>
                 </header>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
                     {serviceData.map((service, index) => (
-                        <ServiceCard key={service.id} service={service} />
+                        <ServiceCard key={service.id} service={service} index={index} />
                     ))}
                 </div>
             </div>
@@ -88,75 +99,97 @@ export default function Services() {
     );
 }
 
-function ServiceCard({ service }: { service: typeof serviceData[0] }) {
+function ServiceCard({ service, index }: { service: typeof serviceData[0], index: number }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <motion.div
-            whileHover={{ y: -5, scale: 1.01 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="bg-white p-6 md:p-10 rounded-[2rem] border border-slate-100 shadow-[0_15px_40px_-12px_rgba(37,99,235,0.08)] flex flex-col items-start h-fit transition-shadow hover:shadow-[0_20px_50px_-10px_rgba(37,99,235,0.15)]"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            viewport={{ once: true }}
+            className="group relative bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-15px_rgba(37,99,235,0.12)] transition-all duration-500"
         >
-            <div className="w-full flex justify-between items-start mb-6">
-                <div className="p-3 bg-blue-50 rounded-2xl text-blue-600">
+            {/* Image Header Section */}
+            <div className="relative h-48 md:h-64 overflow-hidden">
+                <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[30%] group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
+
+                {/* Floating Icon */}
+                <div className="absolute bottom-6 left-8 p-4 bg-white rounded-2xl shadow-xl text-blue-600 z-10">
                     {service.icon}
                 </div>
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="p-2 rounded-full bg-slate-50 text-slate-400 hover:bg-blue-600 hover:text-white transition-all shadow-sm"
-                >
-                    {isOpen ? <Minus size={20} /> : <Plus size={20} />}
-                </button>
             </div>
 
-            <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-2 leading-tight">
-                {service.title}
-            </h3>
-            <p className="text-blue-600 font-semibold text-xs md:text-sm mb-6 uppercase tracking-wide">
-                {service.subtitle}
-            </p>
-
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden w-full"
+            <div className="p-8 md:p-10 pt-2">
+                <div className="flex justify-between items-start mb-4">
+                    <div className="max-w-[80%]">
+                        <h3 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight tracking-tight">
+                            {service.title}
+                        </h3>
+                        <p className="text-blue-600 font-bold text-[10px] md:text-xs mt-2 uppercase tracking-widest flex items-center gap-2">
+                            <Sparkles size={12} /> {service.subtitle}
+                        </p>
+                    </div>
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className={`p-3 rounded-full transition-all duration-300 ${isOpen ? "bg-slate-900 text-white" : "bg-slate-50 text-slate-400 hover:bg-blue-600 hover:text-white"
+                            }`}
                     >
-                        <div className="space-y-6 pt-4 border-t border-slate-50">
-                            {service.points.map((point, idx) => {
-                                const [label, content] = point.split(': ');
-                                return (
-                                    <div key={idx} className="flex gap-4">
-                                        <CheckCircle2 className="text-blue-500 shrink-0 mt-1" size={18} />
-                                        <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-                                            <strong className="text-slate-800">{label}:</strong> {content}
-                                        </p>
-                                    </div>
-                                );
-                            })}
+                        {isOpen ? <Minus size={20} /> : <Plus size={20} />}
+                    </button>
+                </div>
 
-                            {/* FIXED: Uses service.title and removes the 'id' error */}
-                            <button
-                                onClick={() => window.location.href = '/#contact'}
-                                className="mt-4 w-full md:w-auto bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors group"
-                            >
-                                Enquire for Service <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                            </button>
-                        </div>
-                    </motion.div>
+                <AnimatePresence>
+                    {isOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                        >
+                            <div className="space-y-5 py-6 border-t border-slate-50 mt-4">
+                                {service.points.map((point, idx) => {
+                                    const [label, content] = point.split(': ');
+                                    return (
+                                        <motion.div
+                                            key={idx}
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: idx * 0.05 }}
+                                            className="flex gap-4"
+                                        >
+                                            <CheckCircle2 className="text-blue-500 shrink-0 mt-1" size={18} />
+                                            <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                                                <span className="text-slate-900 font-black">{label}:</span> {content}
+                                            </p>
+                                        </motion.div>
+                                    );
+                                })}
+
+
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {!isOpen && (
+                    <button
+                        onClick={() => setIsOpen(true)}
+                        className="group/btn text-blue-600 font-black text-[10px] uppercase tracking-[0.2em] mt-6 flex items-center gap-2 transition-all"
+                    >
+                        Explore More
+                        <motion.div animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+                            <ArrowRight size={14} />
+                        </motion.div>
+                    </button>
                 )}
-            </AnimatePresence>
-
-            {!isOpen && (
-                <button
-                    onClick={() => setIsOpen(true)}
-                    className="text-blue-600 font-bold text-xs uppercase tracking-widest mt-4 flex items-center gap-2 hover:gap-4 transition-all"
-                >
-                    View Detailed Architecture <ArrowRight size={14} />
-                </button>
-            )}
+            </div>
         </motion.div>
     );
 }
