@@ -2,14 +2,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, MessageSquare, Globe, X, LogOut } from 'lucide-react';
+import { LayoutDashboard, Globe, X, LogOut, UserCheck, } from 'lucide-react';
 
 export default function AdminSidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (val: boolean) => void }) {
     const pathname = usePathname();
 
     const menu = [
         { name: 'Overview', icon: <LayoutDashboard size={18} />, path: '/admin' },
-        { name: 'Liaison Inbox', icon: <MessageSquare size={18} />, path: '/admin/messages' },
+
+        {
+            name: 'Registrations',
+            icon: <UserCheck size={18} />,
+            path: '/admin/view-registerations'
+        },
     ];
 
     return (
