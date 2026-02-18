@@ -1,15 +1,16 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Globe, X, LogOut, UserCheck, } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { LayoutDashboard, Globe, X, LogOut, UserCheck, Loader2 } from 'lucide-react';
 
 export default function AdminSidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (val: boolean) => void }) {
     const pathname = usePathname();
+    const router = useRouter();
+    const [isExiting, setIsExiting] = useState(false);
 
     const menu = [
         { name: 'Overview', icon: <LayoutDashboard size={18} />, path: '/admin' },
-
         {
             name: 'Registrations',
             icon: <UserCheck size={18} />,
@@ -17,6 +18,28 @@ export default function AdminSidebar({ isOpen, setIsOpen }: { isOpen: boolean; s
         },
     ];
 
+    // Inside your handleLogout function in AdminSidebar.tsx
+    const handleLogout = async () => {
+        setIsExiting(true);
+        try {
+            const res = await fetch('/api/auth/admin/logout', {
+                method: 'POST',
+            });
+
+            if (res.ok) {
+                // Clears the client-side cache and re-validates middleware
+                router.refresh();
+
+                // REDIRECT TO PUBLIC LOGIN
+                router.push('/login');
+            } else {
+                setIsExiting(false);
+            }
+        } catch (error) {
+            console.error("Logout error:", error);
+            setIsExiting(false);
+        }
+    };
     return (
         <>
             {/* Mobile Backdrop */}
@@ -51,8 +74,17 @@ export default function AdminSidebar({ isOpen, setIsOpen }: { isOpen: boolean; s
                     </nav>
 
                     <div className="pt-6 border-t border-white/5">
-                        <button className="flex items-center gap-4 px-4 py-3 rounded-xl text-red-500 hover:bg-red-500/10 font-bold text-[10px] uppercase tracking-widest transition-all w-full text-left">
-                            <LogOut size={18} /> Exit Portal
+                        <button
+                            onClick={handleLogout}
+                            disabled={isExiting}
+                            className={`flex items-center gap-4 px-4 py-3 rounded-xl text-red-500 hover:bg-red-500/10 font-bold text-[10px] uppercase tracking-widest transition-all w-full text-left disabled:opacity-50`}
+                        >
+                            {isExiting ? (
+                                <Loader2 size={18} className="animate-spin" />
+                            ) : (
+                                <LogOut size={18} />
+                            )}
+                            {isExiting ? 'Terminating...' : 'Exit Portal'}
                         </button>
                     </div>
                 </div>
