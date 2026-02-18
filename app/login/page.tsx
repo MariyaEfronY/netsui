@@ -46,7 +46,7 @@ export default function AdminLogin() {
                     </button>
                 </form>
                 <p className="mt-6 text-center text-xs text-slate-400">
-                    Need a node? <Link href="/admin/register" className="text-blue-500 hover:underline">Enroll Here</Link>
+                    Register? <Link href="/register" className="text-blue-500 hover:underline">Enroll Here</Link>
                 </p>
             </div>
         </div>

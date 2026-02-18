@@ -23,7 +23,7 @@ export default function Navbar() {
 
     const handleRegister = () => {
         setIsRedirecting(true);
-        router.push("/register");
+        router.push("/register-form");
     };
 
     const navLinks = [
@@ -36,13 +36,12 @@ export default function Navbar() {
 
     return (
         <>
-            {/* Floating Rounded Glass Navbar */}
-            <nav className="fixed top-6 left-0 right-0 z-[100] flex justify-center px-4">
-                <div className="w-full max-w-6xl">
+            <nav className="fixed top-4 sm:top-6 left-0 right-0 z-[100] flex justify-center px-4">
+                <div className="w-full max-w-7xl">
                     <div
-                        className={`flex items-center justify-between px-8 h-[60px] rounded-full border transition-all duration-500
+                        className={`flex items-center justify-between px-6 md:px-8 h-[60px] rounded-full border transition-all duration-500
               ${scrolled
-                                ? "bg-white/95 backdrop-blur-xl shadow-2xl border-white/60 scale-[0.97]"
+                                ? "bg-white/95 backdrop-blur-xl shadow-2xl border-white/60 scale-[0.98] lg:scale-[0.97]"
                                 : "bg-white/10 backdrop-blur-lg border-white/20"
                             }
             `}
@@ -55,46 +54,42 @@ export default function Navbar() {
                             <Image
                                 src="/logo/netsui_logo_bgre.png"
                                 alt="Netsui Logo"
-                                width={200}
-                                height={200}
+                                width={180}
+                                height={60}
                                 priority
                                 className="
-      h-[120px]
-      md:h-[44px]
-      lg:h-[150px]
-      w-auto
-      object-contain
-      transition-all
-      duration-300
-      brightness-110
-      contrast-110
-    "
+                                    h-[100px] 
+                                    sm:h-[120px]
+                                    lg:h-[150px]
+                                    w-auto
+                                    object-contain
+                                    transition-all
+                                    duration-300
+                                    brightness-110
+                                "
                             />
                         </div>
 
-
-
-                        {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center gap-10">
+                        {/* Desktop Navigation - Switched to LG breakpoint for Tablet safety */}
+                        <div className="hidden lg:flex items-center gap-6 xl:gap-10">
                             {navLinks.map((link) => (
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className={`group relative text-xs font-bold uppercase tracking-widest transition-all duration-300
-        ${scrolled ? "text-slate-800" : "text-white"}
-        hover:text-blue-600`}
+                                    className={`group relative text-[10px] xl:text-xs font-bold uppercase tracking-widest transition-all duration-300
+                                        ${scrolled ? "text-slate-800" : "text-white"}
+                                        hover:text-blue-600`}
                                 >
                                     <span className="relative">
                                         {link.name}
                                         <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                                     </span>
                                 </a>
-
                             ))}
 
                             <button
                                 onClick={handleRegister}
-                                className="bg-blue-600 text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-blue-700 transition-all duration-300"
+                                className="bg-blue-600 text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-600/20"
                             >
                                 {isRedirecting ? (
                                     <Loader2 className="animate-spin" size={14} />
@@ -106,50 +101,63 @@ export default function Navbar() {
                             </button>
                         </div>
 
-                        {/* Mobile Toggle */}
+                        {/* Tablet/Mobile Toggle - Now visible on screens < 1024px */}
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className={`md:hidden transition-colors duration-300 ${scrolled ? "text-slate-800" : "text-white"
+                            className={`lg:hidden p-2 rounded-full transition-colors duration-300 ${scrolled ? "text-slate-800 bg-slate-100" : "text-white bg-white/10"
                                 }`}
                         >
-                            {isOpen ? <X size={26} /> : <Menu size={26} />}
+                            {isOpen ? <X size={22} /> : <Menu size={22} />}
                         </button>
                     </div>
                 </div>
             </nav>
 
-            {/* Mobile Glass Modal Menu */}
+            {/* Mobile/Tablet Glass Modal Menu */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.96 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.96 }}
-                        transition={{ duration: 0.25 }}
-                        className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-[90] px-6"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-slate-950/80 backdrop-blur-xl flex items-center justify-center z-[95] px-6"
                     >
-                        <div className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-10 shadow-2xl">
-                            <div className="flex flex-col gap-7 text-center">
-                                {navLinks.map((link) => (
-                                    <a
+                        <motion.div
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            className="w-full max-w-sm bg-white/5 border border-white/10 rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden"
+                        >
+                            {/* Close button inside modal for better UX */}
+                            <button
+                                onClick={() => setIsOpen(false)}
+                                className="absolute top-6 right-6 text-slate-400 hover:text-white"
+                            >
+                                <X size={24} />
+                            </button>
+
+                            <div className="flex flex-col gap-6 text-center mt-4">
+                                {navLinks.map((link, i) => (
+                                    <motion.a
                                         key={link.name}
                                         href={link.href}
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: i * 0.05 }}
                                         onClick={() => setIsOpen(false)}
-                                        className="group flex items-center justify-center gap-3 text-lg font-bold uppercase text-white transition-all duration-300 hover:text-blue-400"
+                                        className="group flex items-center justify-between px-4 py-3 rounded-2xl bg-white/5 text-sm font-bold uppercase tracking-[0.2em] text-white hover:bg-blue-600 transition-all duration-300"
                                     >
                                         <span>{link.name}</span>
-
-                                        <ArrowRight
-                                            size={18}
-                                            className="transition-all duration-300 group-hover:translate-x-2 group-hover:text-blue-400"
-                                        />
-                                    </a>
-
+                                        <ArrowRight size={16} />
+                                    </motion.a>
                                 ))}
 
-                                <button
+                                <motion.button
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
                                     onClick={handleRegister}
-                                    className="mt-4 bg-blue-600 text-white py-3 rounded-full font-bold uppercase tracking-wider flex justify-center items-center gap-2 hover:bg-blue-700 transition"
+                                    className="mt-4 bg-blue-600 text-white py-4 rounded-2xl font-bold uppercase tracking-widest text-xs flex justify-center items-center gap-2 hover:bg-blue-700 transition"
                                 >
                                     {isRedirecting ? (
                                         <Loader2 className="animate-spin" size={18} />
@@ -158,9 +166,9 @@ export default function Navbar() {
                                             Register <ArrowRight size={18} />
                                         </>
                                     )}
-                                </button>
+                                </motion.button>
                             </div>
-                        </div>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
