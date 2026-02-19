@@ -1,98 +1,146 @@
 "use client";
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Linkedin, ArrowUpRight, Globe } from 'lucide-react';
+import { motion, Variants } from 'framer-motion';
+import { Mail, MapPin, Linkedin, Globe, Zap } from 'lucide-react';
+import Image from 'next/image'; // Ensure you import Image
+
+const footerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2
+        }
+    }
+};
+
+const columnVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    }
+};
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="relative bg-[#020617] pt-20 pb-10 overflow-hidden text-slate-300">
-            {/* Background Animation: Subtle Grid & Flowing Lines */}
-            <div className="absolute inset-0 opacity-5 pointer-events-none">
-                <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:30px_30px]"></div>
+        <footer className="relative bg-[#020617] pt-32 pb-12 overflow-hidden border-t border-white/5">
+
+            {/* --- ADVANCED BACKGROUND WATERMARK --- */}
+            <div className="absolute top-10 left-[-5%] pointer-events-none select-none">
+                <h2 className="text-[20vw] font-black text-white/[0.02] leading-none uppercase italic tracking-tighter">
+                    Netsui
+                </h2>
             </div>
 
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            <motion.div
+                variants={footerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="container mx-auto px-6 relative z-10"
+            >
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-24">
 
-                    {/* Brand Identity Column */}
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/20">
-                                N
+                    {/* 1. LOGO & MISSION (Spans 5 cols) */}
+                    <motion.div variants={columnVariants} className="md:col-span-5 space-y-10">
+                        <div className="space-y-8">
+                            {/* --- BRAND LOGO SLOT --- */}
+                            <div className="flex flex-col gap-6">
+                                {/* Increased h-16 to h-24 and w-48 to w-72 */}
+                                <div className="relative h-40 w-72 transition-transform hover:scale-105 duration-500">
+                                    <Image
+                                        src="/logo/netsui_logo_bgre.png"
+                                        alt="Netsui Logo"
+                                        fill
+                                        className="object-contain object-left"
+                                        priority
+                                    />
+                                </div>
+                                {/* Visual anchor line adjusted to match larger logo */}
+                                <div className="h-[2px] w-16 bg-blue-600" />
                             </div>
-                            <span className="text-white font-black text-2xl tracking-tighter uppercase">
-                                NETSUI <span className="text-blue-500 font-light italic">熱意</span>
-                            </span>
+
+                            <p className="text-slate-400 text-lg font-medium leading-relaxed italic max-w-md">
+                                Empowering the 2026 Indo-Japan corridor through technical vetting, legal harmonization, and cultural synchronization.
+                            </p>
                         </div>
-                        <p className="text-sm leading-relaxed text-slate-400">
-                            Bridging the Triple Gap through industrial mastery, legal precision, and linguistic depth. Specialized in the 2026 Indo-Japan technological corridor.
+
+                        <div className="flex gap-6">
+                            {[
+                                { Icon: Linkedin, label: 'LinkedIn' },
+                                { Icon: Globe, label: 'Global' }
+                            ].map((social, i) => (
+                                <motion.a
+                                    key={i}
+                                    whileHover={{ y: -2, color: '#3b82f6' }}
+                                    className="text-slate-500 transition-colors flex items-center gap-2 text-xs font-black uppercase tracking-widest"
+                                    href="#"
+                                >
+                                    <social.Icon size={18} /> {social.label}
+                                </motion.a>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* 2. NAVIGATION (Spans 3 cols) */}
+                    <motion.div variants={columnVariants} className="md:col-span-3 space-y-8">
+                        <h4 className="text-blue-500 text-[10px] font-black uppercase tracking-[0.4em]">Expertise</h4>
+                        <ul className="space-y-4">
+                            {['Strategy Desk', 'Legal Office', 'Talent Audit', 'Academy'].map((item) => (
+                                <li key={item}>
+                                    <a href="#" className="text-slate-300 hover:text-white font-bold text-sm uppercase tracking-tighter transition-all block group">
+                                        <span className="group-hover:mr-2 transition-all inline-block opacity-30">/</span> {item}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </motion.div>
+
+                    {/* 3. LIAISON (Spans 4 cols) */}
+                    <motion.div variants={columnVariants} className="md:col-span-4 space-y-8">
+                        <h4 className="text-blue-500 text-[10px] font-black uppercase tracking-[0.4em]">Liaison</h4>
+                        <div className="space-y-6">
+                            <div className="group cursor-pointer border-l-2 border-white/5 pl-6 hover:border-blue-600 transition-all duration-500">
+                                <p className="text-[10px] text-slate-500 font-black uppercase mb-1 tracking-widest">Direct Strategy</p>
+                                <p className="text-white font-bold text-sm group-hover:text-blue-400 transition-colors">liaison@netsui.in</p>
+                            </div>
+                            <div className="group cursor-pointer border-l-2 border-white/5 pl-6 hover:border-blue-600 transition-all duration-500">
+                                <p className="text-[10px] text-slate-500 font-black uppercase mb-1 tracking-widest">Regional Hubs</p>
+                                <p className="text-white font-bold text-sm group-hover:text-blue-400 transition-colors">Bengaluru / Tokyo</p>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* --- BOTTOM BAR --- */}
+                <motion.div
+                    variants={columnVariants}
+                    className="pt-10 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-8"
+                >
+                    <div className="flex items-center gap-4">
+
+                        <p className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.2em]">
+                            © {currentYear} Netsui Consultancy
                         </p>
-                        <div className="flex gap-4">
-                            <a href="#" className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
-                                <Linkedin size={18} />
+                    </div>
+
+                    <div className="flex gap-8">
+                        {['Privacy', 'Engagement'].map((link) => (
+                            <a key={link} href="#" className="text-[10px] font-black text-slate-600 hover:text-blue-500 uppercase tracking-widest transition-all">
+                                {link}
                             </a>
-                            <a href="#" className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
-                                <Globe size={18} />
-                            </a>
-                        </div>
+                        ))}
                     </div>
+                </motion.div>
+            </motion.div>
 
-                    {/* Quick Links */}
-                    <div className="space-y-6">
-                        <h4 className="text-white font-bold text-sm uppercase tracking-widest">Expertise</h4>
-                        <ul className="space-y-4 text-sm">
-                            <li><a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">Market Entry <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-all" /></a></li>
-                            <li><a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">Japan Desk (Legal) <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-all" /></a></li>
-                            <li><a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">Talent Placement <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-all" /></a></li>
-                            <li><a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">Mindset Academy <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-all" /></a></li>
-                        </ul>
-                    </div>
-
-                    {/* Contact Column */}
-                    <div className="space-y-6">
-                        <h4 className="text-white font-bold text-sm uppercase tracking-widest">Connect</h4>
-                        <ul className="space-y-4 text-sm">
-                            <li className="flex items-start gap-3">
-                                <Mail size={18} className="text-blue-500 mt-1" />
-                                <span>strategy@netsui.in</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <MapPin size={18} className="text-blue-500 mt-1" />
-                                <span>Bengaluru Hub | Tokyo Liaison</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Newsletter / Call to Action */}
-                    <div className="space-y-6">
-                        <h4 className="text-white font-bold text-sm uppercase tracking-widest">Newsletter</h4>
-                        <p className="text-xs text-slate-500 italic">Get the monthly Indo-Japan Market Briefing.</p>
-                        <div className="relative">
-                            <input
-                                type="email"
-                                placeholder="Corporate Email"
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-all"
-                            />
-                            <button className="absolute right-2 top-2 bg-blue-600 text-white p-1.5 rounded-lg hover:bg-blue-500 transition-all">
-                                <ArrowUpRight size={16} />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Bottom Bar */}
-                <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-slate-500">
-                        © {currentYear} Netsui Consultancy Services Pvt Ltd.
-                    </p>
-                    <div className="flex gap-8 text-[10px] uppercase tracking-widest font-bold text-slate-500">
-                        <a href="#" className="hover:text-blue-500 transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-blue-500 transition-colors">Terms of Engagement</a>
-                    </div>
-                </div>
-            </div>
+            {/* Subtle light leak to ground the footer */}
+            <div className="absolute bottom-0 right-0 w-[40%] h-[40%] bg-blue-600/5 blur-[120px] pointer-events-none" />
         </footer>
     );
 }

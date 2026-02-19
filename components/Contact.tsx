@@ -1,112 +1,140 @@
 "use client";
-import React from 'react';
-import { motion, cubicBezier } from 'framer-motion';
-import { Send, ArrowUpRight, Globe2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, ArrowUpRight, Globe, CheckCircle2, Sparkles } from 'lucide-react';
 
 export default function Contact() {
-    const fadeInUp = {
-        initial: { opacity: 0, y: 20 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true },
-        transition: { duration: 0.8, ease: cubicBezier(0.16, 1, 0.3, 1) }
+    const [submitted, setSubmitted] = useState(false);
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setSubmitted(true);
     };
 
     return (
-        <section className="bg-white py-32 px-6" id="contact">
+        <section className="bg-white py-24 md:py-48 px-6 relative overflow-hidden" id="contact">
+            {/* Subtle Gradient Glow */}
+            <div className="absolute -top-[10%] -right-[10%] w-[50%] h-[50%] bg-blue-50 rounded-full blur-[120px] opacity-50 pointer-events-none" />
+
             <div className="container mx-auto max-w-6xl">
-                <div className="grid lg:grid-cols-2 gap-20">
+                <div className="flex flex-col lg:flex-row gap-24 items-start">
 
-                    {/* --- MINIMALIST INFO --- */}
-                    <div className="space-y-16">
-                        <motion.div {...fadeInUp}>
-                            <h2 className="text-6xl font-light tracking-tighter text-slate-900 mb-6">
-                                Let's build the <br />
-                                <span className="font-black text-blue-600">Corridor.</span>
-                            </h2>
-                            <p className="text-slate-500 text-lg max-w-sm leading-relaxed">
-                                Strategic technology transformation and partnership inquiries for the 2026 Indo-Japan bridge.
-                            </p>
-                        </motion.div>
-
+                    {/* --- TEXT CONTENT --- */}
+                    <div className="w-full lg:w-1/2 sticky top-32">
                         <motion.div
-                            {...fadeInUp}
-                            transition={{ delay: 0.2 }}
-                            className="space-y-8"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="space-y-12"
                         >
-                            <div>
-                                <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-slate-400 mb-4">Direct Liaison</p>
-                                <div className="space-y-2">
-                                    <a href="mailto:sales@netsui.in" className="flex items-center gap-3 text-xl font-bold text-slate-800 hover:text-blue-600 transition-colors group">
-                                        sales@netsui.in <ArrowUpRight size={18} className="opacity-0 group-hover:opacity-100 -translate-y-1 transition-all" />
-                                    </a>
-                                    <a href="mailto:careers@netsui.in" className="flex items-center gap-3 text-xl font-bold text-slate-800 hover:text-blue-600 transition-colors group">
-                                        careers@netsui.in <ArrowUpRight size={18} className="opacity-0 group-hover:opacity-100 -translate-y-1 transition-all" />
-                                    </a>
-                                </div>
+                            <div className="space-y-4">
+                                <motion.span
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="text-blue-600 font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-3"
+                                >
+                                    <Sparkles size={14} /> Global Expansion
+                                </motion.span>
+                                <h2 className="text-[clamp(3rem,10vw,6rem)] font-black leading-[0.85] tracking-tighter uppercase italic text-slate-950">
+                                    Start the <br />
+                                    <span className="text-blue-600 not-italic">Bridge.</span>
+                                </h2>
                             </div>
 
-                            <div className="pt-4">
-                                <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-slate-400 mb-4">Locations</p>
-                                <p className="text-slate-800 font-bold flex items-center gap-2">
-                                    <Globe2 size={16} className="text-blue-600" /> Bengaluru / Tokyo
-                                </p>
+                            <p className="text-slate-500 text-xl md:text-2xl font-medium max-w-md leading-tight italic">
+                                Seamlessly connecting Indian tech ecosystems with Japanese corporate excellence.
+                            </p>
+
+                            <div className="pt-12 space-y-6">
+                                <div className="group border-b border-slate-100 pb-4">
+                                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Direct Liaison</p>
+                                    <a href="mailto:office@netsui.in" className="text-xl font-bold text-slate-900 hover:text-blue-600 transition-colors flex items-center justify-between">
+                                        office@netsui.in <ArrowUpRight size={20} />
+                                    </a>
+                                </div>
+                                <div className="group border-b border-slate-100 pb-4">
+                                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Regional Presence</p>
+                                    <div className="text-xl font-bold text-slate-900 flex items-center justify-between">
+                                        Tokyo — Bengaluru <Globe size={18} className="text-blue-600" />
+                                    </div>
+                                </div>
                             </div>
                         </motion.div>
                     </div>
 
-                    {/* --- CLEAN ANIMATED FORM --- */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, ease: cubicBezier(0.16, 1, 0.3, 1) }}
-                        viewport={{ once: true }}
-                        className="relative"
-                    >
-                        <form className="space-y-12">
-                            <div className="group relative">
-                                <input
-                                    type="text"
-                                    required
-                                    className="peer w-full bg-transparent border-b border-slate-200 py-4 outline-none focus:border-blue-600 transition-all text-slate-900 font-medium"
-                                />
-                                <label className="absolute left-0 top-4 text-slate-400 pointer-events-none transition-all peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-blue-600 peer-focus:font-bold peer-valid:-top-4 peer-valid:text-[10px]">
-                                    YOUR NAME
-                                </label>
-                            </div>
+                    {/* --- ADVANCED MINIMALIST FORM --- */}
+                    <div className="w-full lg:w-1/2">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                            className="bg-white border border-slate-100 rounded-[3rem] p-8 md:p-14 shadow-2xl shadow-blue-900/5"
+                        >
+                            <AnimatePresence mode="wait">
+                                {!submitted ? (
+                                    <motion.form
+                                        key="form"
+                                        onSubmit={handleSubmit}
+                                        exit={{ opacity: 0, x: 20 }}
+                                        className="space-y-12"
+                                    >
+                                        <div className="space-y-10">
+                                            {['Full Name', 'Corporate Email', 'Organization'].map((label, idx) => (
+                                                <div key={idx} className="relative group">
+                                                    <input
+                                                        type={label.includes('Email') ? 'email' : 'text'}
+                                                        required
+                                                        placeholder=" "
+                                                        className="peer w-full bg-transparent border-b-2 border-slate-100 py-4 outline-none focus:border-blue-600 transition-all text-slate-900 font-bold text-lg"
+                                                    />
+                                                    <label className="absolute left-0 top-4 text-slate-400 pointer-events-none transition-all duration-300 peer-focus:-top-4 peer-focus:text-blue-600 peer-focus:text-[10px] peer-focus:font-black peer-focus:tracking-widest uppercase peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-[10px]">
+                                                        {label}
+                                                    </label>
+                                                </div>
+                                            ))}
 
-                            <div className="group relative">
-                                <input
-                                    type="email"
-                                    required
-                                    className="peer w-full bg-transparent border-b border-slate-200 py-4 outline-none focus:border-blue-600 transition-all text-slate-900 font-medium"
-                                />
-                                <label className="absolute left-0 top-4 text-slate-400 pointer-events-none transition-all peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-blue-600 peer-focus:font-bold peer-valid:-top-4 peer-valid:text-[10px]">
-                                    EMAIL ADDRESS
-                                </label>
-                            </div>
+                                            <div className="relative group">
+                                                <textarea
+                                                    required
+                                                    rows={1}
+                                                    placeholder=" "
+                                                    className="peer w-full bg-transparent border-b-2 border-slate-100 py-4 outline-none focus:border-blue-600 transition-all text-slate-900 font-bold text-lg resize-none"
+                                                />
+                                                <label className="absolute left-0 top-4 text-slate-400 pointer-events-none transition-all duration-300 peer-focus:-top-4 peer-focus:text-blue-600 peer-focus:text-[10px] peer-focus:font-black peer-focus:tracking-widest uppercase peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-[10px]">
+                                                    Your Message
+                                                </label>
+                                            </div>
+                                        </div>
 
-                            <div className="group relative">
-                                <textarea
-                                    required
-                                    rows={1}
-                                    className="peer w-full bg-transparent border-b border-slate-200 py-4 outline-none focus:border-blue-600 transition-all text-slate-900 font-medium resize-none"
-                                ></textarea>
-                                <label className="absolute left-0 top-4 text-slate-400 pointer-events-none transition-all peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-blue-600 peer-focus:font-bold peer-valid:-top-4 peer-valid:text-[10px]">
-                                    HOW CAN WE HELP?
-                                </label>
-                            </div>
-
-                            <motion.button
-                                whileHover={{ gap: '24px' }}
-                                className="flex items-center gap-4 text-slate-900 font-black uppercase tracking-[0.4em] text-xs pt-4 group transition-all"
-                            >
-                                Send Message
-                                <div className="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center group-hover:scale-110 transition-all">
-                                    <Send size={16} />
-                                </div>
-                            </motion.button>
-                        </form>
-                    </motion.div>
+                                        <motion.button
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            type="submit"
+                                            className="w-full bg-slate-950 text-white py-6 rounded-2xl font-black uppercase tracking-[0.4em] text-xs flex items-center justify-center gap-4 hover:bg-blue-600 transition-all duration-500 shadow-xl shadow-blue-900/10"
+                                        >
+                                            Dispatch Inquiry <Send size={16} />
+                                        </motion.button>
+                                    </motion.form>
+                                ) : (
+                                    <motion.div
+                                        key="success"
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className="text-center py-16 space-y-6"
+                                    >
+                                        <div className="h-24 w-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                                            <CheckCircle2 size={48} />
+                                        </div>
+                                        <h3 className="text-3xl font-black italic tracking-tighter uppercase">Message Secured</h3>
+                                        <p className="text-slate-500 font-medium italic">Protocol initiated. We will respond shortly.</p>
+                                        <button onClick={() => setSubmitted(false)} className="text-blue-600 text-[10px] font-black uppercase tracking-widest pt-8 hover:underline transition-all">
+                                            Return to Form
+                                        </button>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                    </div>
 
                 </div>
             </div>

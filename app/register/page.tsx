@@ -15,7 +15,7 @@ export default function AdminRegister() {
             body: JSON.stringify(form),
         });
 
-        if (res.ok) router.push('/admin/login');
+        if (res.ok) router.push('/login');
         else alert("Registration failed. Email might already exist.");
     };
 
@@ -23,7 +23,7 @@ export default function AdminRegister() {
         <div className="min-h-screen bg-[#020617] flex items-center justify-center p-6 text-white">
             <div className="w-full max-w-md bg-white/5 p-10 rounded-[2.5rem] border border-white/10">
                 <UserPlus size={48} className="mx-auto text-blue-500 mb-6" />
-                <h1 className="text-2xl font-bold text-center italic uppercase mb-8">Initialize Admin</h1>
+                <h1 className="text-2xl font-bold text-center italic uppercase mb-8">Register Admin</h1>
 
                 <form onSubmit={handleRegister} className="space-y-4">
                     <input
@@ -46,7 +46,7 @@ export default function AdminRegister() {
                     </button>
                 </form>
 
-                <Link href="/admin/login" className="mt-6 flex justify-center items-center gap-2 text-xs text-slate-400 hover:text-white transition-all">
+                <Link href="/login" className="mt-6 flex justify-center items-center gap-2 text-xs text-slate-400 hover:text-white transition-all">
                     <ArrowLeft size={14} /> Back to Access
                 </Link>
             </div>

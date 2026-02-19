@@ -28,7 +28,7 @@ export default function AdminLogin() {
         <div className="min-h-screen bg-[#020617] flex items-center justify-center p-6 text-white">
             <div className="w-full max-w-md bg-white/5 p-10 rounded-[2.5rem] border border-white/10 backdrop-blur-md">
                 <ShieldCheck size={48} className="mx-auto text-blue-500 mb-6" />
-                <h1 className="text-2xl font-bold text-center italic uppercase mb-8">Admin Access</h1>
+                <h1 className="text-2xl font-bold text-center italic uppercase mb-8">Admin Login</h1>
 
                 <form onSubmit={handleLogin} className="space-y-4">
                     <input

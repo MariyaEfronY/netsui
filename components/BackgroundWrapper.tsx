@@ -1,11 +1,18 @@
 "use client";
 import React from 'react';
-import { motion } from 'framer-motion';
 
 export default function BackgroundWrapper({ children }: { children: React.ReactNode }) {
     return (
-        <div className="relative w-full px-0">
-            {/* Changed px-6 or container to w-full px-0 */}
+        <div
+            style={{
+                position: 'relative',
+                width: '100%',
+                padding: 0,
+                isolation: 'isolate', // Prevents rendering bleed between sections
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
+            }}
+        >
             {children}
         </div>
     );
