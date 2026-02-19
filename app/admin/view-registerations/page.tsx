@@ -63,7 +63,7 @@ export default function RegistrationsPage() {
                             </div>
                             <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tighter italic">Registrations</h1>
                         </div>
-                        <p className="text-slate-500 text-sm font-medium">Monitoring {data.length} institutional bridge enrollment nodes.</p>
+                        <p className="text-slate-500 text-sm font-medium">Monitoring {data.length} institutional bridge enrollments.</p>
                     </div>
 
                     <div className="flex items-center gap-3 w-full lg:w-auto">
@@ -88,7 +88,7 @@ export default function RegistrationsPage() {
                         />
                     </div>
                     <div className="bg-white p-5 rounded-[2rem] shadow-xl shadow-slate-200/60 border border-white flex flex-col justify-center items-center">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Nodes</span>
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Registrations</span>
                         <span className="text-3xl font-black text-blue-600">{filteredData.length}</span>
                     </div>
                 </div>
@@ -101,8 +101,8 @@ export default function RegistrationsPage() {
                                 <tr className="bg-slate-50/50 border-b border-slate-100">
                                     <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Consultant Identity</th>
                                     <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Communication</th>
-                                    <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Deployment Location</th>
-                                    <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Enrolled Timestamp</th>
+                                    <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400"> Location</th>
+                                    <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Registered Timestamp</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-50">
