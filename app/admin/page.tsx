@@ -30,24 +30,7 @@ export default async function AdminDashboard() {
                 ))}
             </div>
 
-            {/* Recent Activity Section */}
-            <div className="bg-white rounded-[2rem] border border-slate-200 shadow-sm overflow-hidden">
-                <div className="px-8 py-6 border-b border-slate-100">
-                    <h3 className="font-black uppercase tracking-widest text-[11px] text-slate-900">Recent Visitors & Requests</h3>
-                </div>
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left">
-                        <thead className="bg-slate-50 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                            <tr>
-                                <th className="px-8 py-5">Full Name</th>
-                                <th className="px-8 py-5">Email Address</th>
-                                <th className="px-8 py-5 text-right">Detection Date</th>
-                            </tr>
-                        </thead>
 
-                    </table>
-                </div>
-            </div>
         </div>
     );
 }
